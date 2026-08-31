@@ -31,6 +31,7 @@ interface ScannedSetup {
   riskRewardRatio: number;
   marketStructure: string;
   bengaliHeadline: string;
+  dataSource?: string;
 }
 
 interface MarketScannerProps {
@@ -195,7 +196,7 @@ export const MarketScanner: React.FC<MarketScannerProps> = ({
                     {language === 'bn' ? setup.bengaliHeadline : setup.marketStructure}
                   </div>
                   <div className="text-[11px] text-slate-400 font-mono flex items-center justify-between">
-                    <span>AI Confidence: <strong className="text-slate-200">{setup.confidence}%</strong></span>
+                    <span>{language === 'bn' ? 'কনফ্লুয়েন্স স্কোর' : 'Confluence'}: <strong className="text-slate-200">{setup.confidence}/100</strong></span>
                     <span>R:R: <strong className="text-emerald-400 font-extrabold">1:{setup.riskRewardRatio}</strong></span>
                   </div>
                 </div>

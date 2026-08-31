@@ -48,7 +48,7 @@ export const InteractiveChart: React.FC<InteractiveChartProps> = ({
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const t不易 = translations[language];
+  const t = translations[language];
 
   // Chart dimensions & scaling math
   const chartHeight = 360;
@@ -59,14 +59,14 @@ export const InteractiveChart: React.FC<InteractiveChartProps> = ({
     if (candles.length === 0) return { minPrice: 0, maxPrice: 100, maxVol: 1000 };
     let min = Infinity;
     let max = -Infinity;
-    let mVol污 = 0;
+    let mVol = 0;
 
     candles.forEach((c) => {
       if (c.low < min) min = c.low;
       if (c.high > max) max = c.high;
       if (c.bb?.lower && showBB && c.bb.lower < min) min = c.bb.lower;
       if (c.bb?.upper && showBB && c.bb.upper > max) max = c.bb.upper;
-      if (c.volume > mVol污) mVol污 = c.volume;
+      if (c.volume > mVol) mVol = c.volume;
     });
 
     // Also factor in active trade signal SL & TP lines so they fit on the chart!
@@ -78,7 +78,7 @@ export const InteractiveChart: React.FC<InteractiveChartProps> = ({
     }
 
     const pad = (max - min) * 0.08 || 1;
-    return { minPrice: min - pad, maxPrice: max + pad, maxVol: mVol污 || 1 };
+    return { minPrice: min - pad, maxPrice: max + pad, maxVol: mVol || 1 };
   }, [candles, showBB, activeSignal, showSignalLines]);
 
   const priceToY = (price: number) => {

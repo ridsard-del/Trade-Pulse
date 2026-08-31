@@ -19,6 +19,9 @@ export interface MarketAsset {
   icon?: string;
   baseAsset?: string;
   quoteAsset?: string;
+  dataSource?: string;
+  dataStatus?: 'LIVE' | 'STALE' | 'OFFLINE';
+  lastUpdated?: number;
 }
 
 export interface Candle {
@@ -42,6 +45,7 @@ export interface Candle {
     middle: number;
     lower: number;
   };
+  atr?: number;
 }
 
 export interface TradeSignal {
@@ -51,7 +55,11 @@ export interface TradeSignal {
   timeframe: Timeframe;
   signalType: SignalType;
   direction: TradeDirection;
-  confidence: number; // 0 - 100
+  confidence: number; // Quantitative confluence score 0 - 100
+  confluenceScore?: number;
+  dataSource?: string;
+  dataStatus?: 'LIVE' | 'STALE' | 'OFFLINE';
+  analysisEngine?: 'GEMINI_AI' | 'QUANT_TECHNICAL_ENGINE';
   currentPrice: number;
   entryZone: {
     min: number;
@@ -85,6 +93,7 @@ export interface TradeSignal {
     supportZone: number;
     resistanceZone: number;
     volatility: 'HIGH' | 'MEDIUM' | 'LOW';
+    atr?: number;
   };
 }
 

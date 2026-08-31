@@ -136,7 +136,7 @@ export const TradePredictionCard: React.FC<TradePredictionCardProps> = ({
           </div>
         </div>
 
-        {/* AI Confidence Meter & Predict Trade Trigger */}
+        {/* AI Confluence Score Meter & Predict Trade Trigger */}
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
             <Gauge className="w-4 h-4 text-emerald-400" />
@@ -145,7 +145,7 @@ export const TradePredictionCard: React.FC<TradePredictionCardProps> = ({
                 {t.confidence}
               </div>
               <div className="text-xs font-mono font-bold text-emerald-400">
-                {signal.confidence}%
+                {signal.confidence}/100
               </div>
             </div>
           </div>
@@ -160,6 +160,22 @@ export const TradePredictionCard: React.FC<TradePredictionCardProps> = ({
             <Sparkles className={`w-3.5 h-3.5 fill-slate-950 ${isPredicting ? 'animate-spin' : ''}`} />
             <span>{isPredicting ? (language === 'bn' ? 'এনালাইজ হচ্ছে...' : 'Analyzing...') : (language === 'bn' ? 'প্রেডিক্ট ট্রেড' : 'Predict Trade')}</span>
           </button>
+        </div>
+      </div>
+
+      {/* Data Source & Provenance Banner */}
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 bg-slate-950/70 rounded-xl border border-slate-800/80 text-[11px] font-mono">
+        <div className="flex items-center gap-2 text-slate-400">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Source: <strong className="text-slate-200">{signal.dataSource || asset.dataSource || 'Live Exchange Data'}</strong></span>
+          <span className="text-slate-600">•</span>
+          <span className="text-emerald-400 font-semibold">{t.noLookAhead}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-slate-500">Engine:</span>
+          <span className="text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30 text-[10px] font-bold">
+            {signal.analysisEngine === 'GEMINI_AI' ? 'Gemini 3.7 Flash AI' : 'Quant Technical Engine'}
+          </span>
         </div>
       </div>
 
@@ -309,6 +325,49 @@ export const TradePredictionCard: React.FC<TradePredictionCardProps> = ({
               {signal.bengaliSummary.riskAdvice}
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Real Technical Indicators Confluence Readout */}
+      {signal.indicators && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 text-[11px] font-mono">
+          <div className="flex flex-col">
+            <span className="text-slate-400 text-[10px]">RSI (14)</span>
+            <span className={`font-bold ${signal.indicators.rsi14 > 70 ? 'text-amber-400' : signal.indicators.rsi14 < 30 ? 'text-emerald-400' : 'text-white'}`}>
+              {signal.indicators.rsi14}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-slate-400 text-[10px]">MACD Momentum</span>
+            <span className={`font-bold ${signal.indicators.macdTrend === 'BULLISH_CROSS' ? 'text-emerald-400' : 'text-rose-400'}`}>
+              {signal.indicators.macdTrend.replace('_', ' ')}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-slate-400 text-[10px]">EMA 20/50 Ribbon</span>
+            <span className="font-bold text-slate-200">
+              {signal.indicators.emaTrend.replace('_', ' ')}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-slate-400 text-[10px]">14 ATR Volatility</span>
+            <span className="font-bold text-cyan-400">
+              {signal.indicators.atr !== undefined ? `$${signal.indicators.atr}` : signal.indicators.volatility}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Institutional Risk & Paper Trading Notice */}
+      <div className="flex items-start gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/50 text-[10px] text-slate-400 leading-relaxed">
+        <Info className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
+        <div>
+          <span className="text-slate-300 font-semibold">
+            {language === 'bn' ? 'রিস্ক ডিসক্লেইমার:' : 'Risk Notice:'}
+          </span>{' '}
+          {language === 'bn'
+            ? 'ট্রেডপালস এআই সিগন্যাল ও কনফ্লুয়েন্স স্কোর রিয়েল এক্সচেঞ্জ ডাটা ও কোয়ান্ট অ্যানালাইসিসের উপর ভিত্তি করে প্রস্তুতকৃত। এটি ১০০% লাভের নিশ্চয়তা দেয় না। সবসময় ক্যাপিটালের ১-২% এর মধ্যে রিস্ক সীমাবদ্ধ রাখুন।'
+            : 'TradePulse signals and confluence scores are computed from authentic exchange series. Confluence ratings represent quantitative alignment rather than absolute win probabilities. Practice strict 1-2% capital risk.'}
         </div>
       </div>
 
