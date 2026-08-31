@@ -1,0 +1,6 @@
+{
+  "name": "TradePulse AI - Real-Time Market Predictor & Trade Calculator",
+  "description": "Real-time market analysis, AI trade predictions, smart entry/exit calculator with risk-reward ratios, and live market intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
